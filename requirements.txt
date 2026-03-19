@@ -1,0 +1,13 @@
+pandas>=2.0.0\nnumpy>=1.24.0\nscikit-learn>=1.3.0\nfastapi>=0.100.0\nuvicorn>=0.23.0\npydantic>=2.0.0\nstreamlit>=1.28.0\nplotly>=5.15.0\npytest>=7.4.0\nhttpx>=0.24.0\n'
+cat > .gitignore << 'EOF'
+__pycache__/\n*.pyc\n.venv/\n.env\n.DS_Store\n'
+cat > README.md << 'EOF'
+# House Price Prediction
+
+ML pipeline with linear regression, random forest, and gradient boosting.
+
+## Quick Start
+```bash
+pip install -r requirements.txt
+python -m pytest tests/ -v
+```
