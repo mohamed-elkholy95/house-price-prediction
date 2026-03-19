@@ -1,0 +1,21 @@
+import pytest
+import numpy as np
+from src.price_model import generate_synthetic_data, preprocess, train_and_evaluate
+
+class TestGenerate:
+    def test_shape(self): assert generate_synthetic_data(100).shape == (100, 5)
+    def test_has_price(self): assert "price" in generate_synthetic_data().columns
+    def test_reproducible(self): assert generate_synthetic_data(seed=42).equals(generate_synthetic_data(seed=42))
+
+class TestPreprocess:
+    def test_shapes(self):
+        df = generate_synthetic_data(200)
+        X, y, _ = preprocess(df)
+        assert X.shape[0] == 200
+
+class TestTrainEvaluate:
+    def test_returns_results(self):
+        df = generate_synthetic_data(200)
+        results = train_and_evaluate(df)
+        assert "random_forest" in results
+        assert results["random_forest"]["r2"] > 0
