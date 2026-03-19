@@ -1,5 +1,3 @@
-"""WORK IN PROGRESS — Adding methods and implementation details."""
-
 """House price prediction model."""
 import logging
 from typing import Any, Dict, Tuple
@@ -35,3 +33,22 @@ def preprocess(df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray, StandardScaler
     y = df["price"].values
     return X, y, scaler
 
+
+def train_and_evaluate(df: pd.DataFrame, test_size: float = 0.2) -> Dict[str, Any]:
+    X, y, _ = preprocess(df)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=RANDOM_SEED)
+    models = {
+        "linear_regression": LinearRegression(),
+        "random_forest": RandomForestRegressor(n_estimators=100, random_state=RANDOM_SEED),
+        "gradient_boosting": GradientBoostingRegressor(n_estimators=100, random_state=RANDOM_SEED, max_depth=5),
+    }
+    results = {}
+    for name, model in models.items():
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_test)
+        rmse = round(np.sqrt(mean_squared_error(y_test, y_pred)), 2)
+        mae = round(mean_absolute_error(y_test, y_pred), 2)
+        r2 = round(r2_score(y_test, y_pred), 4)
+        results[name] = {"rmse": rmse, "mae": mae, "r2": r2}
+        logger.info("%s: RMSE=%.0f, R2=%.4f", name, rmse, r2)
+    return results
