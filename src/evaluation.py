@@ -115,7 +115,7 @@ def cross_validate_models(
         }
 
         logger.info(
-            "%s CV — R²=%.4f±%.4f | RMSE=$%,.0f±$%,.0f | overfit_gap=%.4f",
+            "%s CV — R2=%.4f±%.4f | RMSE=$%.0f±$%.0f | overfit_gap=%.4f",
             name,
             results[name]["r2_mean"],
             results[name]["r2_std"],

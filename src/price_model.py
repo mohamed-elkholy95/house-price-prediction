@@ -253,7 +253,7 @@ def train_and_evaluate(
         }
 
         logger.info(
-            "%s — RMSE=$%,.0f | MAE=$%,.0f | R²=%.4f",
+            "%s — RMSE=$%.0f | MAE=$%.0f | R2=%.4f",
             name, rmse, mae, r2,
         )
 
